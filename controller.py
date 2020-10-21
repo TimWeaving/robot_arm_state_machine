@@ -50,7 +50,7 @@ if __name__ == '__main__':
     #joint_movement=[(3,1000),(3,800),(6,600),(1,600)] example instruction list
     joint_list = []
     for  x in range(7):
-        joint_list.append( state_machine2.joint(x))
+        joint_list.append( state_machine.joint(x))
 
     africa_by_toto(joint_list)
 
