@@ -6,7 +6,7 @@ Created on Sat Oct 17 17:25:21 2020
 '''
 
 import time
-import state_machine2
+import state_machine
 
 def right(joint_list):
     is_ready = False
