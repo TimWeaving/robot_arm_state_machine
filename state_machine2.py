@@ -12,9 +12,9 @@ class State(Enum):
 class joint:
     
     def __init__(self,joint_num):
-        self.type = 0    # instance variable unique to each instance
+        self.type = joint_num    # instance variable unique to each instance
         self.name = "joint"+str(self.type)
-        self.jobs = ['left','right','help me','africa by toto']
+        self.jobs = []#['left','right','help me','africa by toto']
         self.state = State.startup
         #ser = Serial()
         self.ser = object()
@@ -38,10 +38,10 @@ class joint:
         return self.jobs
     
     def startup(self):
+         time.sleep(0.2)
          x = threading.Thread(target=self.serial_state_machine_startup)
          x.start()
          #x.join()
-         print("done?")
         
         
 
@@ -76,15 +76,13 @@ class joint:
     def serial_state_machine_write(self):
         #ser = self.ser
         # will wait in this state until it gets a command
-        #print(jobs)
-        #print(state)
+
         #jobs = self.get_jobs()
         job = self.get_jobs().pop(0)
         job_finished = False
         while (self.state == State.write and not job_finished):
-            print("thread"+self.name+":"+job)
-            #print()
-            time.sleep(1)
+            print("thread"+self.name+": move"+str(job))
+            time.sleep(job/1000) # pretend job takes as long as its number
             job_finished = True
             # compile job into required format
             # send job over serial to robot arm
@@ -104,36 +102,9 @@ class joint:
     
     def serial_state_machine_shutdown(self):
         #ser.close()
-        print("shutdown complete")
         return 0
         # maybe return arm to starting point 
     
     def startup_successful(self):
         return True
    
-    '''
-Axis_0 = joint(0)
-
-while(not Axis_0.is_ready()):
-    time.sleep(0.1)
-
-Axis_0.update_jobs(["do a new job"]) 
-
-time.sleep(0.1)
-while(not Axis_0.is_ready()):
-    time.sleep(1)
-
-time.sleep(0.1)
-Axis_0.set_finished()
-
-'''
-'''
-new_jobs = ['startup','move up', 'move left', 'move claw','play africa by toto']
-finished = False
-#serial_state_machine_generic(0)
-serial_state_machine_startup()
-time.sleep(3)
-new_jobs = ['another job']
-finished = True
-
-'''
