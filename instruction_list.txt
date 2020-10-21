@@ -1,0 +1,5 @@
+#List of instructions goes here
+
+Up 6 400
+Left 2 300
+Right 2 500 
