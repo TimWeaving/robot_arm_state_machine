@@ -38,7 +38,7 @@ class joint:
         return self.jobs
     
     def startup(self):
-         time.sleep(0.2)
+         time.sleep(0.5)
          x = threading.Thread(target=self.serial_state_machine_startup)
          x.start()
          #x.join()
