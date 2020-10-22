@@ -1,29 +1,48 @@
 # UNUSED
 
-import numpy as np
+import random
+from itertools import count
+import time
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+from matplotlib.animation import FuncAnimation
+from mpl_toolkits import mplot3d
+from matplotlib.patches import Circle, PathPatch
+from matplotlib.text import TextPath
+from matplotlib.transforms import Affine2D
+import mpl_toolkits.mplot3d.art3d as art3d
 
-### redo to draw motion of arm??
+plt.style.use('fivethirtyeight')
 
-fig, ax = plt.subplots()
+x_values = []
+y_values = []
+z_values = []
 
-max_x = 5
-max_rand = 10
+x_list_values = [0,1,1,0]
+y_list_values = [0,0,1,0]
+z_list_values = [0,0,1,0]
 
-x = np.arange(0, max_x)
-ax.set_ylim(0, max_rand)
-line, = ax.plot(x, np.random.randint(0, max_rand, max_x))
+index = count()
 
-def init():  # give a clean slate to start
-    line.set_ydata([np.nan] * len(x))
-    return line,
 
-def animate(i):  # update the y values (every 1000ms)
-    line.set_ydata(np.random.randint(0, max_rand, max_x))
-    return line,
+def animate(i):
 
-ani = animation.FuncAnimation(
-    fig, animate, init_func=init, interval=1000, blit=True, save_count=10)
+    #x = next(index)
+    #x_values.append(x_list_values[x])
+    #y_values.append(y_list_values[x])
+    #z_values.append(z_list_values[x])
+    x_values.append(random.randint(0, 2))
+    y_values.append(random.randint(0, 2))
+    z_values.append(random.randint(0, 2))
 
+
+    ax.plot3D(x_values, y_values, z_values, 'blue',linestyle='--')
+          
+    time.sleep(.1)
+
+fig = plt.figure()
+ax = plt.axes(projection='3d')    
+ani = FuncAnimation(plt.gcf(), animate, 10)
+
+
+plt.tight_layout()
 plt.show()

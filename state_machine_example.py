@@ -4,6 +4,7 @@
 import time
 from enum import Enum
 
+new_jobs =[]
 
 class State(Enum):
     startup = 1
@@ -50,6 +51,7 @@ def serial_state_machine_generic_next(state):
 
 def serial_state_machine_startup():
     state = State.startup
+    #ser = Serial()
     ser = object()
     jobs = []
     # do_startup
@@ -64,7 +66,6 @@ def serial_state_machine_startup():
         
     elif(state == State.shutdown):
          serial_state_machine_shutdown(state,ser,jobs)   
-
 
 def serial_state_machine_waiting(state,ser,jobs):
     # will wait in this state until it gets a command
@@ -82,9 +83,8 @@ def serial_state_machine_waiting(state,ser,jobs):
          serial_state_machine_shutdown(state,ser,jobs)   
     return 0 
 
-
 def serial_state_machine_write(state,ser,jobs):
-    # will do the work in this state
+    # will wait in this state until it gets a command
     job = jobs.pop(0)
     job_done = False
     while (state == State.write and not job_done):
@@ -115,16 +115,16 @@ def is_finished():
     global finished
     return finished
 
-def check_task_list_broke(jobs):
+def check_task_list(jobs):
     return jobs
-
+'''
 def check_task_list(jobs):
     global new_jobs
     copy_new_jobs = new_jobs.copy()
     new_jobs = []
     jobs.extend(copy_new_jobs)
     return jobs
-
+'''
 
 new_jobs = ['startup','move up', 'move left', 'move claw','play africa by toto']
 finished = False
