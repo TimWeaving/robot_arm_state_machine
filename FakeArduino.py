@@ -10,6 +10,7 @@ Created on Sun Aug 18 20:46:04 2019
 # A very crude simulator for PySerial assuming it
 # is emulating an Arduino.
 #from http://pyserial.sourceforge.net/shortintro.html
+
 import threading
 import time
 import random
@@ -59,14 +60,6 @@ class Serial:
         while(self._isOpen):
             if(time.clock()-previous_time>delay):
                 previous_time=time.clock()
-                self.temp=self.temp+np.exp(random.uniform(1, 0))*(5/np.e)-3.15
-                #self.temp = np.exp(random.uniform(1, 0))*(5/np.e)
-                self.humidity=self.humidity+np.exp(random.uniform(1, 0))*(10/np.e)-6.3
-                data=str(self.temp)+','+str(self.humidity)+'\n'
-                self._data= data#"25.0,60.0\n"
-                #self._data=ascii(data)
-                #self._in_waiting=len(data)
-                self._in_waiting=1
 
     ## open()
     # opens the port

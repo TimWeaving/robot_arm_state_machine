@@ -1,24 +1,9 @@
 
-#from datetime import datetime
+# UNUSED
+
 import time
-#import numpy as np 
 from enum import Enum
 
-#import plot_data
-#import email_me 
-
-
-serial_port='\.\COM5'
-real_serial= False
-
-'''
-if(real_serial):
-    import serial
-    arduino = serial.Serial(serial_port, 9600,timeout=1.0, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)    
-else:
-    import FakeArduino as serial
-    arduino = serial.Serial(serial_port, 9600,timeout=1.0)
-'''
 
 class State(Enum):
     startup = 1
@@ -39,11 +24,10 @@ def serial_state_machine_generic(state):
        
     if (state == 0):
         # go to next state depending on the outcome of what happened e..g success or failure
-        serial_state_machine_generic()
-        pass
+        serial_state_machine_generic(state)
+
     elif(state == 1):
          serial_state_machine_generic_next(state)
-
     return 0
 
 def serial_state_machine_generic_next(state):
@@ -56,16 +40,16 @@ def serial_state_machine_generic_next(state):
         print("there")
        
     if (state == 0):
+        serial_state_machine_generic(state)
         # go to next state depending on the outcome of what happened e..g success or failure
-        pass
     elif(state == 2):
          # some other condition e.g. movement aborted
         return 0 
 
 
+
 def serial_state_machine_startup():
     state = State.startup
-    #ser = Serial()
     ser = object()
     jobs = []
     # do_startup
@@ -80,6 +64,7 @@ def serial_state_machine_startup():
         
     elif(state == State.shutdown):
          serial_state_machine_shutdown(state,ser,jobs)   
+
 
 def serial_state_machine_waiting(state,ser,jobs):
     # will wait in this state until it gets a command
@@ -97,8 +82,9 @@ def serial_state_machine_waiting(state,ser,jobs):
          serial_state_machine_shutdown(state,ser,jobs)   
     return 0 
 
+
 def serial_state_machine_write(state,ser,jobs):
-    # will wait in this state until it gets a command
+    # will do the work in this state
     job = jobs.pop(0)
     job_done = False
     while (state == State.write and not job_done):
@@ -144,6 +130,4 @@ new_jobs = ['startup','move up', 'move left', 'move claw','play africa by toto']
 finished = False
 #serial_state_machine_generic(0)
 serial_state_machine_startup()
-time.sleep(3)
-new_jobs = ['another job']
 finished = True

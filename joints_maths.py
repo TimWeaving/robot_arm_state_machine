@@ -1,4 +1,5 @@
 
+# UNUSED
 
 def joint_0_function(x,y,z):
     # do some function to transfer movement of joint into movement in global axis
