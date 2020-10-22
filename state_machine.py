@@ -2,6 +2,7 @@
 import time
 from enum import Enum
 import threading
+#import FakeArduino
 
 class State(Enum):
     startup = 1
@@ -101,9 +102,9 @@ class joint:
     
     
     def serial_state_machine_shutdown(self):
+        # maybe return arm to starting point 
         #ser.close()
         return 0
-        # maybe return arm to starting point 
     
     def startup_successful(self):
         return True
