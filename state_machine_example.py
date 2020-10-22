@@ -114,7 +114,7 @@ def startup_successful():
 def is_finished():
     global finished
     return finished
-
+'''
 def check_task_list(jobs):
     return jobs
 '''
@@ -124,7 +124,7 @@ def check_task_list(jobs):
     new_jobs = []
     jobs.extend(copy_new_jobs)
     return jobs
-'''
+
 
 new_jobs = ['startup','move up', 'move left', 'move claw','play africa by toto']
 finished = False
